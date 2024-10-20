@@ -1,8 +1,10 @@
-import {FC, useState, ChangeEvent, useEffect, useRef, useMemo} from 'react'
+import React, {FC, useState, ChangeEvent, useEffect, useRef, useMemo} from 'react'
 import {motion, AnimatePresence} from "framer-motion";
+import {useField} from 'formik'
 import Input from "../Input";
 
 interface DataSelectorProps {
+    name:string,
     data: []
     placeholder?: string;
 }
@@ -27,18 +29,24 @@ const item = {
 
 
 type IconType = 'fas fa-chevron-down' | 'fas fa-search'
-const DataSelector: FC<DataSelectorProps> = ({data,}) => {
+const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
+    const [field, meta, helpers] = useField(name); // Formik useField hook
+    const { value } = field; // Current value in the field
+    const { setValue } = helpers;
+
+
+
     const [icon, setIcon] = useState<IconType>('fas fa-chevron-down')
     const [searchTerm, setSearchTerm] = useState('');
     const [showOptions, setShowOptions] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(null);
 
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
-
+    const handleOptionSelect = (item:never) =>[
+        setValue(item)
+    ]
     // Handle option selection
-
     useEffect(() => {
         const inp: HTMLInputElement | null = document.getElementById('selector-id') as HTMLInputElement
         inp?.addEventListener('focusin', () => {
@@ -69,7 +77,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,}) => {
                 placeholder={showOptions ? 'Search for your city' : 'Region'}
                 type={'text'}
                 formik={false}
-                value={(selectedOption && !showOptions) ? selectedOption.name  : searchTerm}
+                value={(value  && !showOptions) ? value.name  : searchTerm}
                 onChange={handleSearchChange}
                 icon={icon}
                 className={''}
@@ -91,7 +99,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,}) => {
                                 animate={'show'}
                                 exit={'hidden'}
                                 className="p-2 hover:bg-gray-200 cursor-pointer"
-                                onClick={()=>{setSelectedOption(itemd)}}
+                                onClick={()=> handleOptionSelect(itemd)}
                             >
                                 {itemd["name"]}
                             </motion.li>
@@ -99,6 +107,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,}) => {
                     </motion.ul>
                 )}
             </AnimatePresence>
+            {meta?.error && <span className="block text-red-500 text-sm">{meta.error}</span>}
         </div>
     )
 }
