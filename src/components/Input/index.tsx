@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
             <div className="relative flex w-full">
                 {icon && (
                     <i
-                        className={`${icon} absolute left-1.5 translate-y-1/2 transition-colors duration-300 ${focus ? 'text-black' : 'text-gray-400'}`}
+                        className={`${icon} absolute left-1.5 translate-y-1/2 transition-colors duration-300 text-gray-400`}
                     />
                 )}
                 <input
