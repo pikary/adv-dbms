@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base{
     *,
     *::before,
@@ -57,10 +55,7 @@
         max-width: 1240px;
         margin: 0 auto;
     }
-    header{
-        max-width: 1240px;
-        margin: 0 auto;
-    }
+
 
 
     @font-face {

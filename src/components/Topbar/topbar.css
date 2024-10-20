@@ -1,0 +1,9 @@
+.topbar{
+    width: 100%;
+
+}
+
+.topbar__wrapper{
+    max-width: 1240px;
+    margin: 0 auto;
+}

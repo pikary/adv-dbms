@@ -20,7 +20,8 @@ export default {
         '5xl': '3.052rem',
       },
       colors: {
-        primary: '#72BDBB',   // Soft teal
+        primary: '#DB4444',   // Soft teal
+        backround:'#000000',
         secondary: '#4A9D9B', // Dark teal
         accent: '#FFD166',    // Mustard yellow
         neutralGray: '#F0F4F4', // Light neutral gray
