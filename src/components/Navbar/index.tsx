@@ -7,7 +7,7 @@ import './styles.css'
 
 const Navbar:FC = () =>{
     const [inputValue, setInputValue] = useState('');
-
+    
     // Handle input change manually
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
