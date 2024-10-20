@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent } from 'react';
-import { useField } from 'formik';
+import React, {useState, ChangeEvent} from 'react';
+import {useField} from 'formik';
 
 interface InputProps {
     className?: string;
@@ -29,7 +29,7 @@ const Input: React.FC<InputProps> = ({
     const [focus, setFocus] = useState(false);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [field, meta] = formik ? useField({ name, type }) : [{ value }, {}];
+    const [field, meta] = formik ? useField({name, type}) : [{value}, {}];
 
     return (
         <div className={margin}>
@@ -52,8 +52,8 @@ const Input: React.FC<InputProps> = ({
                     className={`w-full px-2 py-2 border-b-2 border-gray-300 focus:border-red-500 outline-none transition-colors duration-300 ease-in-out ${className}`}
                     aria-label={placeholder || labelText}
                     autoComplete="off"
-                    style={{ paddingLeft: icon ? '30px' : undefined }}
-                    {...(formik ? {...field, onBlur:()=>setFocus(false)} : { value, onChange })}
+                    style={{paddingLeft: icon ? '30px' : undefined}}
+                    {...(formik ? {...field, onBlur: () => setFocus(false)} : {value, onChange, onBlur:()=>setFocus(false)})}
                 />
             </div>
             {meta?.error && <span className="block text-red-500 text-sm">{meta.error}</span>}

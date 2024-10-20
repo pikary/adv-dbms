@@ -6,6 +6,7 @@ import Button from "../../components/Button";
 
 import './styles.css'
 import {Link} from "react-router-dom";
+import DataSelector from "../../components/Selector";
 
 const SignUp: FC = () => {
 
@@ -26,16 +27,18 @@ const SignUp: FC = () => {
                         <Form>
                             <Input name={'fullName'} icon={'fas fa-user'} placeholder={'Name'} margin={'mb-4'}/>
                             <Input name={'email'} icon={'fas fa-envelope'} placeholder={'Email'} margin={'mb-4'}/>
+
                             <div className={'mb-4'}>
-                                <label htmlFor="region">Region</label>
-                                <Field as="select" name="region">
-                                    <option value="">Select Region</option>
-                                    {regions.map((region) => (
-                                        <option key={region.id} value={region.name}>
-                                            {region.name}
-                                        </option>
-                                    ))}
-                                </Field>
+                                <DataSelector data={regions as []}></DataSelector>
+                                {/*<label htmlFor="region">Region</label>*/}
+                                {/*<Field as="select" name="region">*/}
+                                {/*    <option value="">Select Region</option>*/}
+                                {/*    {regions.map((region) => (*/}
+                                {/*        <option key={region.id} value={region.name}>*/}
+                                {/*            {region.name}*/}
+                                {/*        </option>*/}
+                                {/*    ))}*/}
+                                {/*</Field>*/}
                             </div>
                             <Input name={'password'} placeholder={'Password'} margin={'mb-4'} icon="fas fa-lock"/>
                             <Input name={'confirmPassword'} placeholder={'Confirm Password'} margin={'mb-4'} icon="fas fa-lock"/>
