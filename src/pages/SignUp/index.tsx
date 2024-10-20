@@ -12,7 +12,7 @@ const SignUp: FC = () => {
 
 
     return (
-        <section className={'w-full flex mb-32 mt-16'}>
+        <section className={'w-full flex mb-16 mt-16'}>
             <div className={'flex-1 img'}
             ></div>
             <div className={'flex-1'}>

@@ -4,7 +4,6 @@ import {loginValidationSchema,initialValues} from "./helpers/validation"
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {Link} from "react-router-dom";
-import './styles.css'
 
 
 
@@ -12,7 +11,7 @@ const SignIn: FC = () => {
 
 
     return (
-        <section className={'w-full flex mb-32 mt-16'}>
+        <section className={'w-full flex mb-20 mt-16'}>
             <div className={'flex-1 img'}
             ></div>
             <div className={'flex-1'}>
