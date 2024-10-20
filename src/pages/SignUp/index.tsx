@@ -16,17 +16,16 @@ const SignUp: FC = () => {
             ></div>
             <div className={'flex-1'}>
                 <div className="w-full max-w-md pt-24 pl-24">
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">Create an Account</h2>
-                    <p className="text-gray-600 mb-8">Enter your details below</p>
-
+                    <h2 className="text-4xl font-bold text-gray-800 mb-4">Create an Account</h2>
+                    <p className="text-gray-600 mb-2">Enter your details below</p>
                     <Formik
                         initialValues={initialValues}
                         onSubmit={() => {
                         }}
                         validationSchema={registrationValidationSchema}>
                         <Form>
-                            <Input name={'fullName'} placeholder={'Name'} margin={'mb-4'}/>
-                            <Input name={'email'} placeholder={'Email'} margin={'mb-4'}/>
+                            <Input name={'fullName'} icon={'fas fa-user'} placeholder={'Name'} margin={'mb-4'}/>
+                            <Input name={'email'} icon={'fas fa-envelope'} placeholder={'Email'} margin={'mb-4'}/>
                             <div className={'mb-4'}>
                                 <label htmlFor="region">Region</label>
                                 <Field as="select" name="region">
@@ -38,8 +37,8 @@ const SignUp: FC = () => {
                                     ))}
                                 </Field>
                             </div>
-                            <Input name={'password'} placeholder={'Password'} margin={'mb-4'}/>
-                            <Input name={'confirmPassword'} placeholder={'Confirm Password'} margin={'mb-4'}/>
+                            <Input name={'password'} placeholder={'Password'} margin={'mb-4'} icon="fas fa-lock"/>
+                            <Input name={'confirmPassword'} placeholder={'Confirm Password'} margin={'mb-4'} icon="fas fa-lock"/>
                             <Button className={'mb-2 text-white'} type={'submit'} text={'Create Account'}/>
                             <Button type="button" text={"Sign Up with Google"} icon="fa-brands fa-google" className={'bg-transparent border-2 text-black mb-4'}/>
                             <p className={'text-center'}>
@@ -49,10 +48,8 @@ const SignUp: FC = () => {
                         </Form>
                     </Formik>
                 </div>
-
             </div>
         </section>
-
     )
 }
 

@@ -41,7 +41,7 @@ const Input: React.FC<InputProps> = ({
             <div className="relative flex w-full">
                 {icon && (
                     <i
-                        className={`${icon} absolute left-1.5 translate-y-1/2 transition-colors duration-300 text-gray-400`}
+                        className={`${icon} absolute left-1.5 top-1/2 -translate-y-1/2 transition-colors duration-300 text-gray-400 ${focus ? 'text-primary' : 'text-gray-400'}`}
                     />
                 )}
                 <input
@@ -49,11 +49,11 @@ const Input: React.FC<InputProps> = ({
                     type={type}
                     placeholder={placeholder}
                     onFocus={() => setFocus(true)}
-                    className={`px-2 py-1 rounded border border-transparent focus:border-black focus:shadow-[0px_0px_10px_1px_gray] transition ease-in-out delay-330 ${className}`}
+                    className={`w-full px-2 py-2 border-b-2 border-gray-300 focus:border-red-500 outline-none transition-colors duration-300 ease-in-out ${className}`}
                     aria-label={placeholder || labelText}
                     autoComplete="off"
                     style={{ paddingLeft: icon ? '30px' : undefined }}
-                    {...(formik ? field : { value, onChange })}
+                    {...(formik ? {...field, onBlur:()=>setFocus(false)} : { value, onChange })}
                 />
             </div>
             {meta?.error && <span className="block text-red-500 text-sm">{meta.error}</span>}
