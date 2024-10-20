@@ -1,0 +1,4 @@
+.img{
+    background: url("../../assets/images/side_img.jpg") no-repeat center center; /* Ensures the image is centered */
+    background-size: cover;
+}

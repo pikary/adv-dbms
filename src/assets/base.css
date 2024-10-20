@@ -41,7 +41,7 @@
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        background: linear-gradient(to right, #f7f8fc, #dee2e6);
+        background: white
 
     }
 
