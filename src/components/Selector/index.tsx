@@ -1,4 +1,4 @@
-import {FC, useState, ChangeEvent, useEffect, useRef} from 'react'
+import {FC, useState, ChangeEvent, useEffect, useRef, useMemo} from 'react'
 import {motion, AnimatePresence} from "framer-motion";
 import Input from "../Input";
 
@@ -21,13 +21,13 @@ const container = {
 };
 
 const item = {
-    hidden: {opacity: 0, y: -10}, // Each item will fade in and move up slightly
-    show: {opacity: 1, y: 0, transition: {duration: 0.2}}, // Animates to full opacity and original position
+    hidden: {opacity: 0, y: -10},
+    show: {opacity: 1, y: 0, transition: {duration: 0.2}},
 };
 
 
 type IconType = 'fas fa-chevron-down' | 'fas fa-search'
-const DataSelector: FC<DataSelectorProps> = ({data, placeholder,}) => {
+const DataSelector: FC<DataSelectorProps> = ({data,}) => {
     const [icon, setIcon] = useState<IconType>('fas fa-chevron-down')
     const [searchTerm, setSearchTerm] = useState('');
     const [showOptions, setShowOptions] = useState(false);
@@ -39,35 +39,37 @@ const DataSelector: FC<DataSelectorProps> = ({data, placeholder,}) => {
 
     // Handle option selection
 
-
-    //fas fa-chevron-down
-
     useEffect(() => {
         const inp: HTMLInputElement | null = document.getElementById('selector-id') as HTMLInputElement
         inp?.addEventListener('focusin', () => {
             setShowOptions(true)
             setIcon('fas fa-search')
-
         })
         inp?.addEventListener('focusout', () => {
             setIcon('fas fa-chevron-down')
-            console.log('HEYEHY')
             setShowOptions(false)
+            setSearchTerm('')
         })
     }, []);
-    //@ts-ignore
-    const filteredData = data.filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    const filteredData = useMemo(
+        () =>
+            data.filter(item =>
+                //@ts-ignore
+                item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+            ),
+        [data, searchTerm] // Recalculate only when 'data' or 'searchTerm' changes
+    );
 
     return (
         <div className="relative w-full">
-
             <Input
                 name={'selector-id'}
                 labelText={''}
                 placeholder={showOptions ? 'Search for your city' : 'Region'}
                 type={'text'}
                 formik={false}
-                value={searchTerm}
+                value={(selectedOption && !showOptions) ? selectedOption.name  : searchTerm}
                 onChange={handleSearchChange}
                 icon={icon}
                 className={''}
@@ -82,19 +84,21 @@ const DataSelector: FC<DataSelectorProps> = ({data, placeholder,}) => {
                         className="absolute w-full bg-white border border-gray-300 max-h-60 overflow-y-auto z-10 mt-2"
                     >
                         {filteredData.map((itemd) =>
-                            <motion.li variants={item}
-                                       className="p-2 hover:bg-gray-200 cursor-pointer">{itemd["name"]}</motion.li>
+                            <motion.li
+                                key={itemd['id']}
+                                variants={item}
+                                initial={'hidden'}
+                                animate={'show'}
+                                exit={'hidden'}
+                                className="p-2 hover:bg-gray-200 cursor-pointer"
+                                onClick={()=>{setSelectedOption(itemd)}}
+                            >
+                                {itemd["name"]}
+                            </motion.li>
                         )}
                     </motion.ul>
                 )}
-
             </AnimatePresence>
-
-            {selectedOption && (
-                <div className="mt-2">
-                    <p>Selected: Test</p>
-                </div>
-            )}
         </div>
     )
 }
