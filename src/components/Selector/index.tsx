@@ -29,6 +29,8 @@ const item = {
 
 
 type IconType = 'fas fa-chevron-down' | 'fas fa-search'
+
+// TODO: FIX TIPIZATION, make function use generics, avoid using tsignore, never ,any
 const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
     const [field, meta, helpers] = useField(name); // Formik useField hook
     const { value } = field; // Current value in the field
@@ -43,8 +45,8 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
-    const handleOptionSelect = (item:never) =>[
-        setValue(item)
+    const handleOptionSelect = (itemId:never) =>[
+        setValue(itemId)
     ]
     // Handle option selection
     useEffect(() => {
@@ -69,6 +71,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
         [data, searchTerm] // Recalculate only when 'data' or 'searchTerm' changes
     );
 
+    const label = useMemo(()=>data.find(item=> item['id']===value) ,[value])
     return (
         <div className="relative w-full">
             <Input
@@ -77,7 +80,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
                 placeholder={showOptions ? 'Search for your city' : 'Region'}
                 type={'text'}
                 formik={false}
-                value={(value  && !showOptions) ? value.name  : searchTerm}
+                value={(value  && !showOptions) ? label!['name'] : searchTerm}
                 onChange={handleSearchChange}
                 icon={icon}
                 className={''}
@@ -99,7 +102,7 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
                                 animate={'show'}
                                 exit={'hidden'}
                                 className="p-2 hover:bg-gray-200 cursor-pointer"
-                                onClick={()=> handleOptionSelect(itemd)}
+                                onClick={()=> handleOptionSelect(itemd['id'])}
                             >
                                 {itemd["name"]}
                             </motion.li>

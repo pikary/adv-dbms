@@ -19,19 +19,19 @@ const registrationValidationSchema = Yup.object().shape({
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm Password is required'),
 
-    role: Yup.string()
-        .oneOf(['buyer', 'seller'], 'Role must be either buyer or seller')
-        .required('Role is required'),
+    // role: Yup.string()
+    //     .oneOf(['buyer', 'seller'], 'Role must be either buyer or seller')
+    //     .required('Role is required'),
 
     region: Yup.string()
         .required('Region is required'),
 
     // Optional field for sellers
-    shopName: Yup.string().when('role', {
-        is: 'seller',
-        then: Yup.string().required('Shop Name is required for sellers'),
-        otherwise: Yup.string().notRequired(),
-    }),
+    // shopName: Yup.string().when('role', {
+    //     is: 'seller',
+    //     then: Yup.string().required('Shop Name is required for sellers'),
+    //     otherwise: Yup.string().notRequired(),
+    // }),
 });
 
 const initialValues ={

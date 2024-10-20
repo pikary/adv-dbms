@@ -22,7 +22,10 @@ const SignUp: FC = () => {
                     <Formik
                         initialValues={initialValues}
                         onSubmit={() => {
+
                         }}
+                        validateOnBlur={true}
+                        validateOnChange={false}
                         validationSchema={registrationValidationSchema}>
                         <Form>
                             <Input name={'fullName'} icon={'fas fa-user'} placeholder={'Name'} margin={'mb-4'}/>

@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = ({
                     aria-label={placeholder || labelText}
                     autoComplete="off"
                     style={{paddingLeft: icon ? '30px' : undefined}}
-                    {...(formik ? {...field, onBlur: () => setFocus(false)} : {value, onChange, onBlur:()=>setFocus(false)})}
+                    {...(formik ? {...field, onBlur: () => setFocus(false)} : {value, onChange, onBlur:()=> setFocus(false)})}
                 />
             </div>
             {meta?.error && <span className="block text-red-500 text-sm">{meta.error}</span>}
