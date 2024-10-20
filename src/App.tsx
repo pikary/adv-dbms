@@ -2,6 +2,7 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import Topbar from "./components/Topbar";
 import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
                         <Route path="/profile" element={<></>}/>
                     </Routes>
                 </main>
+                <Footer></Footer>
             </Router>
         </>
     )
