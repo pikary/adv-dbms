@@ -60,6 +60,8 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
             setShowOptions(false)
             setSearchTerm('')
         })
+
+
     }, []);
 
     const filteredData = useMemo(
