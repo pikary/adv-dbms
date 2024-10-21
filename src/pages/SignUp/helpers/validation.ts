@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { RegistrationRequestBody } from '../../../store/entities/User/types';
 
 const registrationValidationSchema = Yup.object().shape({
     fullName: Yup.string()
@@ -34,7 +35,7 @@ const registrationValidationSchema = Yup.object().shape({
     // }),
 });
 
-const initialValues ={
+const initialValues:RegistrationRequestBody ={
     fullName: '',
     email: '',
     password: '',

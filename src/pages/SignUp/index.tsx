@@ -8,9 +8,13 @@ import './styles.css'
 import { Link } from "react-router-dom";
 import DataSelector from "../../components/Selector";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useAppDispatch, useTypedSelector } from "../../store/hooks.ts";
+import { registerAsync } from "../../store/entities/User/api.ts";
+import { RegistrationRequestBody } from "../../store/entities/User/types.ts";
+
 
 const SignUp: FC = () => {
-
+    const dispatch = useAppDispatch()
     const googleLogin = useGoogleLogin({
         onSuccess: codeResponse => {
             console.log('GOOOGLE');
@@ -19,6 +23,15 @@ const SignUp: FC = () => {
         flow: 'auth-code',
     });
 
+    const onSubmit = async(values:RegistrationRequestBody) =>{
+        try{
+            const result = await dispatch(registerAsync(values)).unwrap()
+            //onSuccess
+
+        }catch(e){
+            //onerror
+        }
+    }
     return (
         <section className={'w-full flex mb-16 mt-16'}>
             <div className={'flex-1 img'}
@@ -29,9 +42,7 @@ const SignUp: FC = () => {
                     <p className="text-gray-600 mb-2">Enter your details below</p>
                     <Formik
                         initialValues={initialValues}
-                        onSubmit={() => {
-
-                        }}
+                        onSubmit={onSubmit}
                         validateOnBlur={true}
                         validateOnChange={false}
                         validationSchema={registrationValidationSchema}>

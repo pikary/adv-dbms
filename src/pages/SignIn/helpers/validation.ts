@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { LoginRequestBody } from '../../../store/entities/User/types';
 
 const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
@@ -9,7 +10,7 @@ const loginValidationSchema = Yup.object().shape({
         .required('Password is required'),
 });
 
-const initialValues ={
+const initialValues:LoginRequestBody ={
     email: '',
     password: '',
 }

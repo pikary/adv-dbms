@@ -4,12 +4,23 @@ import {loginValidationSchema,initialValues} from "./helpers/validation"
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {Link} from "react-router-dom";
-
+import { LoginRequestBody } from "../../store/entities/User/types";
+import { loginAsync } from "../../store/entities/User/api";
+import { useAppDispatch,useTypedSelector } from "../../store/hooks";
 
 
 const SignIn: FC = () => {
+    const dispatch = useAppDispatch()
 
+    const onSubmit = async(values:LoginRequestBody) =>{
+        try{
+            const result = await dispatch(loginAsync(values)).unwrap()
+            //onSuccess
 
+        }catch(e){
+            //onerror
+        }
+    }
     return (
         <section className={'w-full flex mb-20 mt-16'}>
             <div className={'flex-1 img'}
@@ -20,9 +31,7 @@ const SignIn: FC = () => {
                     <p className="text-gray-600 mb-2">Enter your details below</p>
                     <Formik
                         initialValues={initialValues}
-                        onSubmit={() => {
-
-                        }}
+                        onSubmit={onSubmit}
                         validateOnBlur={true}
                         validateOnChange={false}
                         validationSchema={loginValidationSchema}>

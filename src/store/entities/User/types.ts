@@ -15,4 +15,7 @@ export interface User {
 export interface RegistrationRequestBody extends Omit<User, '_id' | 'wishlist' | 'productListings' | 'salesHistory'> {
     confirmPassword: string;
 }
-export interface LoginRequestBody extends Omit<User, 'userId' | 'fullName' | 'role' | 'region' | 'wishlist' | 'shopName' | 'productListings' | 'salesHistory'> {}
+export interface LoginRequestBody {
+    email: string;
+    password: string;
+}
