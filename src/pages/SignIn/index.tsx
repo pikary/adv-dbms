@@ -1,5 +1,6 @@
 import {FC} from "react";
-import {Formik, Form, Field} from "formik";
+import {Formik, Form} from "formik";
+import { useNavigate } from "react-router-dom";
 import {loginValidationSchema,initialValues} from "./helpers/validation"
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -11,14 +12,15 @@ import { useAppDispatch,useTypedSelector } from "../../store/hooks";
 
 const SignIn: FC = () => {
     const dispatch = useAppDispatch()
-
-    const onSubmit = async(values:LoginRequestBody) =>{
+    const navigate = useNavigate()
+    const onSubmit = async(values:LoginRequestBody) =>{   
         try{
-            const result = await dispatch(loginAsync(values)).unwrap()
+            await dispatch(loginAsync(values)).unwrap()
             //onSuccess
-
+            navigate('/')
         }catch(e){
             //onerror
+            // TODO: Error message show in bottom right corner
         }
     }
     return (

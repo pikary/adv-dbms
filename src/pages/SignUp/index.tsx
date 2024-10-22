@@ -1,33 +1,41 @@
 import { FC, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import { registrationValidationSchema, initialValues, regions } from "./helpers/validation.ts";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
-import './styles.css'
 import { Link } from "react-router-dom";
 import DataSelector from "../../components/Selector";
 import { useAppDispatch } from "../../store/hooks.ts";
 import { registerAsync, googleAsync } from "../../store/entities/User/api.ts";
 import { RegistrationRequestBody } from "../../store/entities/User/types.ts";
+import './styles.css'
 
 
 const SignUp: FC = () => {
     const dispatch = useAppDispatch()
- 
+    const navigate = useNavigate()
     const onSubmit = async(values:RegistrationRequestBody) =>{
         try{
-            const result = await dispatch(registerAsync(values)).unwrap()
+            await dispatch(registerAsync(values)).unwrap()
             //onSuccess
-
+            navigate('/main')
         }catch(e){
             //onerror
+            // TODO: Error message show in bottom right corner
         }
     }
     
     const googleLoginCallback = async(response:any) =>{
-        await dispatch(googleAsync({token: response.credential}))
+        try{
+            await dispatch(googleAsync({token: response.credential})).unwrap()
+            navigate('/main')
+        }catch(e){
+
+        }
     }
+
     useEffect(() => {
         window.google.accounts.id.initialize({
             client_id: '229084646214-h4envqms90napi5k6os5r4u4us4f3j8o.apps.googleusercontent.com',
@@ -42,7 +50,6 @@ const SignUp: FC = () => {
         wrapper.style.display = 'none'
         //goggle button
      
-
         const googleBtn = document.getElementById('googleLogin')
         googleBtn?.addEventListener('click',()=>{
             console.log('clikc');

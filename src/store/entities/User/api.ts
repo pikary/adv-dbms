@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {LoginRequestBody, RegistrationRequestBody, ResponseUserBody} from './types'
 import baseRequest from "../../../utils/baseApi";
-
+import { setAuthToken } from ".";
 
 export const registerAsync = createAsyncThunk<
     ResponseUserBody,
@@ -14,7 +14,7 @@ export const registerAsync = createAsyncThunk<
             'api/auth/register',
             reqBody
         );
-
+        thunkAPI.dispatch(setAuthToken(result?.data.accessToken || ''))
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);
@@ -32,6 +32,7 @@ export const loginAsync = createAsyncThunk<
             'api/auth/login',
             reqBody
         );
+        thunkAPI.dispatch(setAuthToken(result?.data.accessToken || ''))
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);

@@ -45,9 +45,9 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
     const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
     };
-    const handleOptionSelect = (itemId:never) =>[
+    const handleOptionSelect = (itemId:never) =>{
         setValue(itemId)
-    ]
+    }
     // Handle option selection
     useEffect(() => {
         const inp: HTMLInputElement | null = document.getElementById('selector-id') as HTMLInputElement
@@ -60,8 +60,6 @@ const DataSelector: FC<DataSelectorProps> = ({data,name}) => {
             setShowOptions(false)
             setSearchTerm('')
         })
-
-
     }, []);
 
     const filteredData = useMemo(

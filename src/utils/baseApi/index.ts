@@ -42,6 +42,7 @@ const baseRequest = async <ReturnType>(
             throw new ApiError(req.status,result.message)
         }
 
+        console.log(result);
         return { data: result as ReturnType, headers: req.headers, statusCode: req.status };
     } catch (e: any) {
         console.error(e);

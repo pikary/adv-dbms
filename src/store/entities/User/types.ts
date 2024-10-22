@@ -12,7 +12,8 @@ export interface User {
     salesHistory?: string[]; // Only for sellers, references to order IDs
 }
 
-export interface ResponseUserBody extends User{
+export interface ResponseUserBody{
+    user:User,
     accessToken:string,
     refreshToken:string
 }
