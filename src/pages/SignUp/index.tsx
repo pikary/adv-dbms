@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Formik, Form, Field } from "formik";
+import { FC, useEffect } from "react";
+import { Formik, Form } from "formik";
 import { registrationValidationSchema, initialValues, regions } from "./helpers/validation.ts";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -7,22 +7,14 @@ import Button from "../../components/Button";
 import './styles.css'
 import { Link } from "react-router-dom";
 import DataSelector from "../../components/Selector";
-import { useGoogleLogin } from "@react-oauth/google";
-import { useAppDispatch, useTypedSelector } from "../../store/hooks.ts";
-import { registerAsync } from "../../store/entities/User/api.ts";
+import { useAppDispatch } from "../../store/hooks.ts";
+import { registerAsync, googleAsync } from "../../store/entities/User/api.ts";
 import { RegistrationRequestBody } from "../../store/entities/User/types.ts";
 
 
 const SignUp: FC = () => {
     const dispatch = useAppDispatch()
-    const googleLogin = useGoogleLogin({
-        onSuccess: codeResponse => {
-            console.log('GOOOGLE');
-            console.log(codeResponse)
-        },
-        flow: 'auth-code',
-    });
-
+ 
     const onSubmit = async(values:RegistrationRequestBody) =>{
         try{
             const result = await dispatch(registerAsync(values)).unwrap()
@@ -32,6 +24,31 @@ const SignUp: FC = () => {
             //onerror
         }
     }
+    
+    const googleLoginCallback = async(response:any) =>{
+        await dispatch(googleAsync({token: response.credential}))
+    }
+    useEffect(() => {
+        window.google.accounts.id.initialize({
+            client_id: '229084646214-h4envqms90napi5k6os5r4u4us4f3j8o.apps.googleusercontent.com',
+            callback: (a)=>{googleLoginCallback(a)},
+            ux_mode: 'popup'
+        });
+
+        const wrapper: HTMLDivElement = document.createElement('div')
+        document.body.appendChild(wrapper);
+        window.google.accounts.id.renderButton(wrapper,  { theme: 'outline', size: 'large' } )
+        const wrapperBtn = wrapper.querySelector("div[role=button]")
+        wrapper.style.display = 'none'
+        //goggle button
+     
+
+        const googleBtn = document.getElementById('googleLogin')
+        googleBtn?.addEventListener('click',()=>{
+            console.log('clikc');
+            (wrapperBtn as HTMLButtonElement).click()
+        })
+    }, []);
     return (
         <section className={'w-full flex mb-16 mt-16'}>
             <div className={'flex-1 img'}
@@ -56,12 +73,14 @@ const SignUp: FC = () => {
                             <Input name={'confirmPassword'} placeholder={'Confirm Password'} margin={'mb-4'} icon="fas fa-lock" />
                             <Button className={'mb-2 text-white'} type={'submit'} text={'Create Account'} />
                             <Button
-                                onClick={() => { googleLogin() }}
+                                id="googleLogin"
                                 type="button"
                                 text={"Sign Up with Google"}
                                 icon="fa-brands fa-google"
                                 className={'bg-transparent border-2 text-black mb-4'}
                             />
+                                                        {/* <div id="googleLogin" className="mb-4"></div> */}
+
                             <p className={'text-center'}>
                                 Already have account? &nbsp;&nbsp;
                                 <Link className={'inline underline'} to={'/'}>Log In</Link>

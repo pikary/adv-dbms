@@ -1,17 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {LoginRequestBody, RegistrationRequestBody, User} from './types'
+import {LoginRequestBody, RegistrationRequestBody, ResponseUserBody} from './types'
 import baseRequest from "../../../utils/baseApi";
 
 
 export const registerAsync = createAsyncThunk<
-    User,
+    ResponseUserBody,
     RegistrationRequestBody,
     { rejectValue: string }
 >('user/register', async (reqBody, thunkAPI) => {
     try {
-        const result = await baseRequest<User>(
+        const result = await baseRequest<ResponseUserBody>(
             'POST',
-            'api/register',
+            'api/auth/register',
             reqBody
         );
 
@@ -22,16 +22,33 @@ export const registerAsync = createAsyncThunk<
 });
 
 export const loginAsync = createAsyncThunk<
-    User,
+    ResponseUserBody,
     LoginRequestBody,
     { rejectValue: string }
 >('user/login', async (reqBody, thunkAPI) => {
     try {
-        const result = await baseRequest<User>(
+        const result = await baseRequest<ResponseUserBody>(
             'POST',
-            'api/login',
+            'api/auth/login',
             reqBody
         );
+        return result!.data
+    } catch (e) {
+        return thunkAPI.rejectWithValue((e as Error).message);
+    }
+});
+
+export const googleAsync = createAsyncThunk<
+    ResponseUserBody,
+    {token:string},
+    { rejectValue: string }
+>('user/googleAuth', async (reqBody, thunkAPI) => {
+    try {
+        const result = await baseRequest<ResponseUserBody>(
+            'POST',
+            'api/auth/google',
+            reqBody
+        );      
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);

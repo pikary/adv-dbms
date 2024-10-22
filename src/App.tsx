@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import SignUp from "./pages/SignUp";
 import Footer from "./components/Footer";
 import SignIn from "./pages/SignIn";
-
+import Main from "./pages/Main";
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
                 <hr/>
                 <main>
                     <Routes>
-                        <Route path="/" element={<></>}/>
+                        <Route path="/" element={<Main/>}/>
                         <Route path="/login" element={<SignIn/>}/>
                         <Route path="/register" element={<SignUp/>}/>
                         <Route path="/profile" element={<></>}/>

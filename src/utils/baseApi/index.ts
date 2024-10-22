@@ -38,8 +38,8 @@ const baseRequest = async <ReturnType>(
         });
         const result = await req.json();
         if (!req.ok) {
-            const resbody = await req.text();
-            throw new ApiError(req.status,resbody)
+            // const resbody = await req.text();
+            throw new ApiError(req.status,result.message)
         }
 
         return { data: result as ReturnType, headers: req.headers, statusCode: req.status };

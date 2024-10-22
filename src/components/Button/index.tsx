@@ -23,6 +23,7 @@ function Button(props: ButtonProps) {
 
     return (
         <button
+            id={props.id}
             disabled={disabled || false}
             onClick={onClick}
             className={'w-full bg-primary text-base cursor-pointer flex gap-4 justify-center items-center px-3 py-4 font-semibold rounded-lg ' + className}

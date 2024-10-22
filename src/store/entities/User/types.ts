@@ -12,6 +12,11 @@ export interface User {
     salesHistory?: string[]; // Only for sellers, references to order IDs
 }
 
+export interface ResponseUserBody extends User{
+    accessToken:string,
+    refreshToken:string
+}
+
 export interface RegistrationRequestBody extends Omit<User, '_id' | 'wishlist' | 'productListings' | 'salesHistory'> {
     confirmPassword: string;
 }
