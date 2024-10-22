@@ -20,6 +20,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setAuthToken: (state, action: PayloadAction<string>) => {
+            console.log(action.payload);
+            
             localStorage.setItem('access_token', action.payload)
         },   
     },

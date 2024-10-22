@@ -1,7 +1,7 @@
 
 export interface User {
     _id: string;
-    fullName: string;
+    username: string;
     email: string;
     password: string; // Ideally, this would be a hashed password in a real-world scenario
     role: 'buyer' | 'seller'; // Can only be either 'buyer' or 'seller'
@@ -14,8 +14,8 @@ export interface User {
 
 export interface ResponseUserBody{
     user:User,
-    accessToken:string,
-    refreshToken:string
+    access_token:string,
+    refresh_token:string
 }
 
 export interface RegistrationRequestBody extends Omit<User, '_id' | 'wishlist' | 'productListings' | 'salesHistory'> {

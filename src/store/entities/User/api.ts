@@ -14,7 +14,9 @@ export const registerAsync = createAsyncThunk<
             'api/auth/register',
             reqBody
         );
-        thunkAPI.dispatch(setAuthToken(result?.data.accessToken || ''))
+
+        
+        thunkAPI.dispatch(setAuthToken(result?.data.access_token || ''))
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);
@@ -32,7 +34,7 @@ export const loginAsync = createAsyncThunk<
             'api/auth/login',
             reqBody
         );
-        thunkAPI.dispatch(setAuthToken(result?.data.accessToken || ''))
+        thunkAPI.dispatch(setAuthToken(result?.data.access_token || ''))
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);
@@ -50,6 +52,8 @@ export const googleAsync = createAsyncThunk<
             'api/auth/google',
             reqBody
         );      
+        thunkAPI.dispatch(setAuthToken(result?.data.access_token || ''))
+
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);
