@@ -12,7 +12,7 @@ import { registerAsync, googleAsync } from "../../store/entities/User/api.ts";
 import { RegistrationRequestBody } from "../../store/entities/User/types.ts";
 import './styles.css'
 
-
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 const SignUp: FC = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
@@ -38,7 +38,7 @@ const SignUp: FC = () => {
 
     useEffect(() => {
         window.google.accounts.id.initialize({
-            client_id: '229084646214-h4envqms90napi5k6os5r4u4us4f3j8o.apps.googleusercontent.com',
+            client_id: GOOGLE_CLIENT_ID,
             callback: (a)=>{googleLoginCallback(a)},
             ux_mode: 'popup'
         });
