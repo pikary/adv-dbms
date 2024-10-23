@@ -1,0 +1,15 @@
+.category-list{
+    position: relative;
+    /* max-width: 270px; */
+    flex-basis: 270px;
+}
+
+.category-list::after{
+    content: '';
+    position: absolute;
+    top: -48px;
+    right: 0;
+    width: 2px;
+    height: calc(100% + 48px);
+    background-color: lightgray;
+}

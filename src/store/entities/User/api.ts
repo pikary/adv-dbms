@@ -53,7 +53,6 @@ export const googleAsync = createAsyncThunk<
             reqBody
         );      
         thunkAPI.dispatch(setAuthToken(result?.data.access_token || ''))
-
         return result!.data
     } catch (e) {
         return thunkAPI.rejectWithValue((e as Error).message);

@@ -15,7 +15,7 @@ const container = {
         opacity: 1,
         y: 0,
         transition: {
-            delayChildren: 0.2, // Delay the children's appearance slightly
+            delayChildren: 0.5, // Delay the children's appearance slightly
             staggerChildren: 0.1, // Stagger the children with a small delay between them
         },
     },
