@@ -22,6 +22,7 @@ export default {
       colors: {
         primary: '#DB4444',   // Soft teal
         backround:'#000000',
+        inactive:'#7F7F7F',
         secondary: '#4A9D9B', // Dark teal
         accent: '#FFD166',    // Mustard yellow
         neutralGray: '#F0F4F4', // Light neutral gray
