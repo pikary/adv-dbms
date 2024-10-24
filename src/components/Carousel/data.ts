@@ -20,13 +20,13 @@ const banners = [
     {
         id: 3,
         title: 'AirPods Pro',
-        subtitle: 'Limited Time Offer',
+        subtitle: 'Limited Time <br/> Offer',
         imgSrc: bannerImg,
         altText: 'AirPods Pro Banner',
     },
     {
         id: 4,
-        title: 'Apple Watch Series 8',
+        title: 'Apple Watch <br/> Series 8',
         subtitle: 'Get 5% Off',
         imgSrc: bannerImg,
         altText: 'Apple Watch Banner',
@@ -34,7 +34,7 @@ const banners = [
     {
         id: 5,
         title: 'iPad Pro 2022',
-        subtitle: 'Special Bundle Deals',
+        subtitle: 'Special Bundle <br/> Deals',
         imgSrc: bannerimg2,
         altText: 'iPad Pro Banner',
     }
