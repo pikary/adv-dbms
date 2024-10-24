@@ -29,11 +29,6 @@ const Carousel: FC = () => {
         setActiveIndex(index);
     };
 
-
-    const currentBanner = useMemo(() => {
-        return banners[activeIndex]; // Now it returns the correct banner based on activeIndex
-    }, [activeIndex]);
-
     return (
         <div className="carousel flex-1 ml-12 relative overflow-hidden">
             <motion.div
