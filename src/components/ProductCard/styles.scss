@@ -1,0 +1,59 @@
+.card {
+    width: 270px;
+    height: 320px;
+}
+
+.stars {
+    position: relative;
+    display: inline-block;
+}
+
+.star {
+    position: relative;
+    font-size: 24px;
+    color: lightgray;
+    display: inline-block;
+
+    &__full {
+        &::before {
+            content: "\2605";
+            position: absolute;
+            font-size: inherit; 
+            color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+    }
+
+    &__half {
+        &::before {
+            content: "\2605";
+            font-size: inherit; 
+            color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            /* Show only half of the star */
+            overflow: hidden;
+        }
+    }
+
+    &__other {
+        &::before {
+            content: "\2605";
+            font-size: inherit; 
+            color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: var(--fill-percentage);
+            /* Show only half of the star */
+            overflow: hidden;
+        }
+    }
+
+}
