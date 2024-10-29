@@ -46,7 +46,6 @@ const ProductList: FC<ProductListProps> = ({ products, pageNumber, itemsPerPage 
                 ))}
             </div>
             <div className="flex w-full justify-center mt-20">
-                
                 <Button className="text-white max-w-fit px-10" text="View All Products" />
             </div>
         </>
