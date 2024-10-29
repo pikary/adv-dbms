@@ -3,7 +3,8 @@ import { Product } from "./types";
 import './styles.scss'
 
 interface ProductCardProps {
-    data: Product
+    data: Product,
+    className?:string 
 }
 
 
@@ -38,7 +39,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
 
     return (
-        <div className="card relative">
+        <div className={`card relative ${props.className}`}>
             <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5' }}>
                 <img className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2" src={data.images[0]} width={190} height={270} alt="product_img" />
             </div>
