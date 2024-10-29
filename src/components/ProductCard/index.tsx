@@ -75,7 +75,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
 
                 </div>
             }
-
         </div>
     );
 }
