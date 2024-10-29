@@ -30,7 +30,7 @@ const baseRequest = async <ReturnType>(
             body: body ? JSON.stringify(body) : null,
             headers: {
                 'Content-Type': 'application/json',
-                // Authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
+                Authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
                 ...config.headers,
             },
             signal: config.signal,

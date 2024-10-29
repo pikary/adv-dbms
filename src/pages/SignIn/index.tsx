@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {Formik, Form} from "formik";
 import { useNavigate } from "react-router-dom";
 import {loginValidationSchema,initialValues} from "./helpers/validation"
@@ -6,9 +6,11 @@ import Input from "../../components/Input";
 import Button from "../../components/Button";
 import {Link} from "react-router-dom";
 import { LoginRequestBody } from "../../store/entities/User/types";
-import { loginAsync } from "../../store/entities/User/api";
+import { loginAsync ,googleAsync} from "../../store/entities/User/api";
 import { useAppDispatch,useTypedSelector } from "../../store/hooks";
 
+
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 const SignIn: FC = () => {
     const dispatch = useAppDispatch()
@@ -23,6 +25,36 @@ const SignIn: FC = () => {
             // TODO: Error message show in bottom right corner
         }
     }
+
+
+    const googleLoginCallback = async(response:any) =>{
+        try{
+            await dispatch(googleAsync({token: response.credential})).unwrap()
+            navigate('/main')
+        }catch(e){
+
+        }
+    }
+    useEffect(() => {
+        window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: (a)=>{googleLoginCallback(a)},
+            ux_mode: 'popup'
+        });
+
+        const wrapper: HTMLDivElement = document.createElement('div')
+        document.body.appendChild(wrapper);
+        window.google.accounts.id.renderButton(wrapper,  { theme: 'outline', size: 'large' } )
+        const wrapperBtn = wrapper.querySelector("div[role=button]")
+        wrapper.style.display = 'none'
+        //goggle button
+     
+        const googleBtn = document.getElementById('googleLogin1')
+        googleBtn?.addEventListener('click',()=>{
+            console.log('clikc');
+            (wrapperBtn as HTMLButtonElement).click()
+        })
+    }, []);
     return (
         <section className={'w-full flex mb-20 mt-16'}>
             <div className={'flex-1 img'}
@@ -42,7 +74,7 @@ const SignIn: FC = () => {
                     
                             <Input name={'password'} placeholder={'Password'} margin={'mb-4'} icon="fas fa-lock"/>
                             <Button className={'mb-2 text-white'} type={'submit'} text={'Login'}/>
-                            <Button type="button" text={"Sign Up with Google"} icon="fa-brands fa-google" className={'bg-transparent border-2 text-black mb-4'}/>
+                            <Button id='googleLogin1' type="button" text={"Sign Up with Google"} icon="fa-brands fa-google" className={'bg-transparent border-2 text-black mb-4'}/>
                             <Link className={'block underline'} to={'/'}>Forget password?</Link>
                         </Form>
                     </Formik>

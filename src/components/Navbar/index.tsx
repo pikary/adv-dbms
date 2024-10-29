@@ -40,7 +40,6 @@ const Navbar: FC = () => {
                     </li>
                 </ul>
                 <div className="flex items-center gap-10">
-
                     <Input
                         className="border-gray-300"
                         name="username"
