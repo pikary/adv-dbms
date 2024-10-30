@@ -21,4 +21,5 @@ export interface Product {
     reviews: Review[];
     tags: string[];
     discount: Discount;
+    quantity?:number
 }

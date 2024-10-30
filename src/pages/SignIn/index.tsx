@@ -73,7 +73,7 @@ const SignIn: FC = () => {
                             <Input name={'email'} icon={'fas fa-envelope'} placeholder={'Email'} margin={'mb-4'}/>
                     
                             <Input name={'password'} placeholder={'Password'} margin={'mb-4'} icon="fas fa-lock"/>
-                            <Button className={'mb-2 text-white'} type={'submit'} text={'Login'}/>
+                            <Button className={'mb-2 text-white bg-primary'} type={'submit'} text={'Login'}/>
                             <Button id='googleLogin1' type="button" text={"Sign Up with Google"} icon="fa-brands fa-google" className={'bg-transparent border-2 text-black mb-4'}/>
                             <Link className={'block underline'} to={'/'}>Forget password?</Link>
                         </Form>

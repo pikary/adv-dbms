@@ -78,7 +78,7 @@ const SignUp: FC = () => {
                             </div>
                             <Input name={'password'} placeholder={'Password'} margin={'mb-4'} icon="fas fa-lock" />
                             <Input name={'confirmPassword'} placeholder={'Confirm Password'} margin={'mb-4'} icon="fas fa-lock" />
-                            <Button className={'mb-2 text-white'} type={'submit'} text={'Create Account'} />
+                            <Button className={'mb-2 text-white bg-primary'} type={'submit'} text={'Create Account'} />
                             <Button
                                 id="googleLogin"
                                 type="button"
@@ -87,7 +87,7 @@ const SignUp: FC = () => {
                                 className={'bg-transparent border-2 text-black mb-4'}
                             />
                                                         {/* <div id="googleLogin" className="mb-4"></div> */}
-
+                                                        
                             <p className={'text-center'}>
                                 Already have account? &nbsp;&nbsp;
                                 <Link className={'inline underline'} to={'/'}>Log In</Link>

@@ -19,7 +19,7 @@ interface AuthProviderProps {
 // AuthProvider Component
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const navigate = useNavigate()
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const [user, setUser] = useState<User | null>(null);
 
     // Function to get user credentials with token

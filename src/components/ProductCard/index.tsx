@@ -1,8 +1,10 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import { Product } from "./types";
 import './styles.scss'
 import Button from "../Button";
 import { AnimatePresence, motion } from "framer-motion";
+import { renderStars } from './helpers'
+import { CartContext } from "../../context/cartContext";
 
 interface ProductCardProps {
     data: Product,
@@ -12,6 +14,15 @@ interface ProductCardProps {
 
 
 const ProductCard: FC<ProductCardProps> = (props) => {
+    //here using context get addProcut from it an other function
+    const {
+        products,
+        addProduct,
+        removeProduct,
+        clearCart
+    } = useContext(CartContext)
+
+
     const [cardHovered, setCardHovered] = useState<boolean>(false)
     const cardRef = useRef<HTMLDivElement>(null)
     const { data } = props
@@ -21,22 +32,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         : data.price.toFixed(2);
 
 
-    // Calculate stars based on ratings
-    const renderStars = (rating: number) => {
-        const stars = [];
-        for (let i = 1; i <= 5; i++) {
-            if (i <= Math.floor(rating)) {
-                // Full star
-                stars.push(<span key={i} className="star star__full">&#9733;</span>);
-            } else {
-                // not full star
-                const delta = (i - rating) * 100;
-                const filliness = (100 - (delta))
-                stars.push(<span key={i} className="star star__other" style={{ '--fill-percentage': `${filliness}%` } as React.CSSProperties}>&#9733;</span>);
-            }
-        }
-        return stars;
-    };
 
 
     useEffect(() => {
@@ -53,9 +48,18 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             cardRef.current?.removeEventListener('mouseleave', handleMouseLeave)
         }
     }, [])
+
+
+    const handleAddToCart = (product:Product) => {
+        console.log('ADDED');
+
+        addProduct(product)
+    }
+
+
     return (
         <div ref={cardRef} className={`card relative ${props.className} cursor-pointer box-content border-0 hover:border-2 hover:border-primary transition duration-300 ease-in-out`}>
-            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5', zIndex: -1 }}>
+            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5',}}>
                 <img className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2" src={data.images[0]} width={190} height={270} alt="product_img" />
                 {cardHovered &&
                     <AnimatePresence>
@@ -68,6 +72,10 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                             key={`${props.data.product_id}-btn`}
                         >
                             <Button
+                                onClick={(e)=>{
+                                    e.stopPropagation()                                    
+                                    handleAddToCart(props.data)
+                                }}
                                 className="text-white bg-black rounded-none text-xl font-semibold"
                                 text="Add to Cart"
                             />
@@ -98,6 +106,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                     {data.discount.percent_off}%
                 </div>
             }
+
+
             {
                 <div className="absolute top-5 right-3">
                     <button className="flex items-center justify-center bg-white rounded-full w-5 h-5 mb-5">
@@ -106,7 +116,6 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                     <button className="flex items-center justify-center bg-white rounded-full w-5 h-5">
                         <i className="far fa-eye text-base text-black hover:text-primary transition-colors duration-100 ease-out"></i>
                     </button>
-
                 </div>
             }
         </div>
