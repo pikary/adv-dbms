@@ -54,8 +54,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
         }
     }, [])
     return (
-        <div ref={cardRef} className={`card relative ${props.className} cursor-pointer box-border border-0 hover:border-2 hover:border-primary transition duration-300 ease-in-out`}>
-            <div className="w-full relative" style={{ height: 250, width: 300, backgroundColor: '#F5F5F5', zIndex: -1 }}>
+        <div ref={cardRef} className={`card relative ${props.className} cursor-pointer box-content border-0 hover:border-2 hover:border-primary transition duration-300 ease-in-out`}>
+            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5', zIndex: -1 }}>
                 <img className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2" src={data.images[0]} width={190} height={270} alt="product_img" />
                 {cardHovered &&
                     <AnimatePresence>

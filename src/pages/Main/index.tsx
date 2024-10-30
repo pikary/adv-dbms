@@ -27,12 +27,12 @@ const Main: FC = () => {
                     <Carousel></Carousel>
                 </div>
             </section>
-            <section id="todays" style={{ paddingTop: 120 }}>
+            <section id="todays" style={{ paddingTop: 50 }}>
                 <SectionTitle title="Today's"></SectionTitle>
                 <Recommendations></Recommendations>
             </section>
 
-            <section id="electonics-category" style={{paddingTop:120}}>
+            <section id="electonics-category" style={{paddingTop:50}}>
                 <SectionTitle title="Top category"></SectionTitle>
                 <ProductList products={products} pageNumber={1} itemsPerPage={8}></ProductList>
             </section>
