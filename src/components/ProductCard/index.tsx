@@ -1,23 +1,24 @@
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Product } from "./types";
 import './styles.scss'
+import Button from "../Button";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ProductCardProps {
     data: Product,
-    className?:string 
+    className?: string
 }
 
 
 
 const ProductCard: FC<ProductCardProps> = (props) => {
+    const [cardHovered, setCardHovered] = useState<boolean>(false)
+    const cardRef = useRef<HTMLDivElement>(null)
     const { data } = props
     // Calculate the price with discount if active
     const discountedPrice = data.discount.active
         ? (data.price * (1 - data.discount.percent_off / 100)).toFixed(2)
         : data.price.toFixed(2);
-
-
-
 
 
     // Calculate stars based on ratings
@@ -38,12 +39,43 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     };
 
 
+    useEffect(() => {
+        const handleMouseEnter = (e: MouseEvent) => {
+            setCardHovered(true)
+        }
+        const handleMouseLeave = (e: MouseEvent) => {
+            setCardHovered(false)
+        }
+        cardRef.current?.addEventListener('mouseenter', handleMouseEnter)
+        cardRef.current?.addEventListener('mouseleave', handleMouseLeave)
+        return () => {
+            cardRef.current?.removeEventListener('mouseenter', handleMouseEnter)
+            cardRef.current?.removeEventListener('mouseleave', handleMouseLeave)
+        }
+    }, [])
     return (
-        <div className={`card relative ${props.className}`}>
-            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5' }}>
+        <div ref={cardRef} className={`card relative ${props.className} cursor-pointer box-border border-0 hover:border-2 hover:border-primary transition duration-300 ease-in-out`}>
+            <div className="w-full relative" style={{ height: 250, width: 300, backgroundColor: '#F5F5F5', zIndex: -1 }}>
                 <img className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2" src={data.images[0]} width={190} height={270} alt="product_img" />
+                {cardHovered &&
+                    <AnimatePresence>
+                        <motion.div
+                            className="absolute bottom-0 w-full"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 20 }}
+                            transition={{ duration: 0.3 }}
+                            key={`${props.data.product_id}-btn`}
+                        >
+                            <Button
+                                className="text-white bg-black rounded-none text-xl font-semibold"
+                                text="Add to Cart"
+                            />
+                        </motion.div>
+                    </AnimatePresence>
+                }
             </div>
-            <div className="pt-4">
+            <div className="pt-4 pl-4 pb-4">
                 <h4 className="text-lg font-semibold leading-7">{data.name}</h4>
                 <p className="text-base leading-7">
                     {data.discount.active && (
@@ -58,6 +90,7 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                     <p className="inline ml-1 mt-1 text-gray-500 text-base">(88)</p>
                 </div>
             </div>
+
 
             {
                 data.discount.active &&
