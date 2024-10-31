@@ -1,9 +1,12 @@
-import { FC,useRef,useState,useEffect } from 'react'
-import {motion } from 'framer-motion';
+import { FC, useRef, useState, useEffect } from 'react'
+import { motion } from 'framer-motion';
 import { products } from '../../pages/Main/mock';
 import Button from '../Button';
 import ProductCard from '../ProductCard';
-
+import { useTypedSelector, useAppDispatch } from '../../store/hooks';
+import { getRecommenedProducts } from '../../store/entities/Product/api'
+import { unwrapResult } from '@reduxjs/toolkit';
+import Spinner from '../Spinner';
 
 const throttle = (func: (...args: any[]) => void, limit: number) => {
     let inThrottle: boolean;
@@ -18,7 +21,10 @@ const throttle = (func: (...args: any[]) => void, limit: number) => {
 
 
 
-const Recommendations:FC = () => {
+const Recommendations: FC = () => {
+    const dispatch = useAppDispatch()
+    const { recommended, isLoading } = useTypedSelector((state) => state.products)
+
     const sliderRef = useRef<HTMLDivElement>(null);
     const [currentX, setCurrentX] = useState(0);  // Tracks the current translation value
     const [scrollProgress, setScrollProgress] = useState(0)
@@ -72,12 +78,37 @@ const Recommendations:FC = () => {
             };
         }
     }, []);
+
+
+
+
+
+    const fetchRecommendations = async () => {
+        try {
+            const response = await dispatch(getRecommenedProducts({ a: '' }));
+            const result = unwrapResult(response);
+            console.log(result.products);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    useEffect(() => {
+        fetchRecommendations();
+    }, []);
     return (
         <>
+
             <div className="flex items-center mt-5">
                 <div className="flex items-center gap-10 flex-1">
                     <h3 className="text-3xl font-semibold">Take a look at this</h3>
                     {/* <FlashSaleTimer></FlashSaleTimer> */}
+                    <button
+                        className="rounded-full w-10 h-10 bg-slate-400 bg-opacity-50 cursor-pointer"
+                        onClick={fetchRecommendations}
+                    >
+                        <i className="block fa-solid fa-arrows-rotate text-xl text-black hover:text-primary transition-colors duration-150"></i>
+                    </button>
                 </div>
                 <div className="flex h-fit items-center gap-5">
                     <button
@@ -95,17 +126,22 @@ const Recommendations:FC = () => {
                 </div>
             </div>
             <div id="product-slider-cont" className="slider overflow-hidden">
-                <motion.div
-                    ref={sliderRef}
-                    id="product-slider"
-                    className="slider__container relative flex h-fit gap-8 py-10"
-                    animate={{ x: currentX }}  // Animate the translateX value
-                    transition={{ type: "tween", duration: 0.5 }}  // Animation duration and easing
-                >
-                    {products.map((p) => (
-                        <ProductCard key={p.product_id} data={p} />
-                    ))}
-                </motion.div>
+                {isLoading ? (
+                    <div className="flex justify-center items-center h-40">
+                        <Spinner width={50} height={50}></Spinner>
+                    </div>
+                ) : (
+                    <motion.div
+                        ref={sliderRef}
+                        className="slider__container relative flex h-fit gap-8 py-10"
+                        animate={{ x: currentX }}
+                        transition={{ type: "tween", duration: 0.5 }}
+                    >
+                        {recommended.map((p) => (
+                            <ProductCard key={p.product_id} data={p} />
+                        ))}
+                    </motion.div>
+                )}
             </div>
             <motion.div
                 className="z-10 h-1 bg-primary"

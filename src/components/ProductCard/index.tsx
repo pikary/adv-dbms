@@ -5,6 +5,9 @@ import Button from "../Button";
 import { AnimatePresence, motion } from "framer-motion";
 import { renderStars } from './helpers'
 import { CartContext } from "../../context/cartContext";
+import { AuthContext } from '../../context/userContext'
+import { likeProduct } from "../../store/entities/Product/api";
+import { useAppDispatch } from "../../store/hooks";
 
 interface ProductCardProps {
     data: Product,
@@ -14,24 +17,30 @@ interface ProductCardProps {
 
 
 const ProductCard: FC<ProductCardProps> = (props) => {
-    //here using context get addProcut from it an other function
     const {
-        products,
         addProduct,
-        removeProduct,
-        clearCart
     } = useContext(CartContext)
 
+    const dispatch = useAppDispatch();
 
+    const handleLike = async () => {
+        try {
+            await dispatch(likeProduct({ product_id: data.product_id,likedProductTags:data.tags  })); // Replace 'user-id' with actual user ID
+            alert('Product liked!'); // Optionally show a success message
+        } catch (error) {
+            console.error('Error liking product:', error);
+            alert('Failed to like product.');
+        }
+    };
     const [cardHovered, setCardHovered] = useState<boolean>(false)
     const cardRef = useRef<HTMLDivElement>(null)
     const { data } = props
+
+
     // Calculate the price with discount if active
-    const discountedPrice = data.discount.active
-        ? (data.price * (1 - data.discount.percent_off / 100)).toFixed(2)
-        : data.price.toFixed(2);
-
-
+    // const discountedPrice = data.discount.active
+    //     ? (data.price * (1 - data.discount.percent_off / 100)).toFixed(2)
+    //     : data.price.toFixed(2);
 
 
     useEffect(() => {
@@ -50,16 +59,15 @@ const ProductCard: FC<ProductCardProps> = (props) => {
     }, [])
 
 
-    const handleAddToCart = (product:Product) => {
+    const handleAddToCart = (product: Product) => {
         console.log('ADDED');
-
         addProduct(product)
     }
 
 
     return (
         <div ref={cardRef} className={`card relative ${props.className} cursor-pointer box-content border-0 hover:border-2 hover:border-primary transition duration-300 ease-in-out`}>
-            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5',}}>
+            <div className="w-full relative" style={{ height: 250, width: 270, backgroundColor: '#F5F5F5', }}>
                 <img className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2" src={data.images[0]} width={190} height={270} alt="product_img" />
                 {cardHovered &&
                     <AnimatePresence>
@@ -72,8 +80,8 @@ const ProductCard: FC<ProductCardProps> = (props) => {
                             key={`${props.data.product_id}-btn`}
                         >
                             <Button
-                                onClick={(e)=>{
-                                    e.stopPropagation()                                    
+                                onClick={(e) => {
+                                    e.stopPropagation()
                                     handleAddToCart(props.data)
                                 }}
                                 className="text-white bg-black rounded-none text-xl font-semibold"
@@ -86,10 +94,10 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             <div className="pt-4 pl-4 pb-4">
                 <h4 className="text-lg font-semibold leading-7">{data.name}</h4>
                 <p className="text-base leading-7">
-                    {data.discount.active && (
+                    {/* {data.discount.active && (
                         <span className="line-through mr-2">${data.price.toFixed(2)}</span>
-                    )}
-                    <span className="text-primary">${discountedPrice}</span>
+                    )} */}
+                    <span className="text-primary">${data.price}</span>
                 </p>
                 <div className="text-base flex items-center leading-7">
                     <div className="mt-1">
@@ -100,17 +108,17 @@ const ProductCard: FC<ProductCardProps> = (props) => {
             </div>
 
 
-            {
+            {/* {
                 data.discount.active &&
                 <div className="absolute top-5 left-3 bg-primary w-fit text-white text-base rounded-lg py-1 px-3">
                     {data.discount.percent_off}%
                 </div>
-            }
+            } */}
 
 
             {
                 <div className="absolute top-5 right-3">
-                    <button className="flex items-center justify-center bg-white rounded-full w-5 h-5 mb-5">
+                    <button className="flex items-center justify-center bg-white rounded-full w-5 h-5 mb-5" onClick={handleLike}>
                         <i className="far fa-heart text-base text-black hover:text-primary transition-colors duration-100 ease-out"></i>
                     </button>
                     <button className="flex items-center justify-center bg-white rounded-full w-5 h-5">

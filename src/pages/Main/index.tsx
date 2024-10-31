@@ -1,9 +1,7 @@
 import { FC, useRef, useEffect, useState } from "react";
 import Categories from "../../components/MainPage/Categories";
 import Carousel from "../../components/Carousel";
-import ProductCard from "../../components/ProductCard";
 import SectionTitle from "../../components/SectionTitle";
-import { products } from "./mock";
 import './styles.scss'
 import Button from "../../components/Button";
 import Recommendations from "../../components/Recommendations";
@@ -11,14 +9,9 @@ import ProductList from "../../components/ProductList";
 
 
 
-
 const Main: FC = () => {
-
     const sliderRef = useRef<HTMLDivElement>(null);
   
-
-   
-
     return (
         <>
             <section>
@@ -34,7 +27,7 @@ const Main: FC = () => {
 
             <section id="electonics-category" style={{paddingTop:50}}>
                 <SectionTitle title="Top category"></SectionTitle>
-                <ProductList products={products} pageNumber={1} itemsPerPage={8}></ProductList>
+                <ProductList></ProductList>
             </section>
             <div style={{ height: 60 }}>
 
